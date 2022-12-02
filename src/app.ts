@@ -1,9 +1,11 @@
 import express from 'express'
+import 'dotenv/config'
+
+import { router } from './routes'
 
 const app = express()
 
-app.get('/', (_, res) => {
-    return res.send('Olá, Dev')
-})
+app.use(express.json())
+app.use(router)
 
 export default app

@@ -1,3 +1,5 @@
 import app from './app'
 
-app.listen(8080, () => console.log('Server is listen...'))
+app.listen(process.env.PORT, () => { 
+	console.log(`Server is listen in PORT: ${process.env.PORT}`) 
+})
