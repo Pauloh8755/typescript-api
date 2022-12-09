@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import * as yup from 'yup'
+import { CityProvider } from '../database/providers/City'
 
 import { validation } from '../middleware'
 
@@ -29,8 +30,19 @@ const createValidator = validation({
 })
 
 const create =  async (req: Request, res: Response) => {
-	const cidade: ICidade = req.body
-	return res.status(200).json(cidade)
+	try {
+		const cidade: ICidade = req.body
+		const result = await CityProvider.create(cidade)
+	
+		return res.status(StatusCodes.CREATED).json(result)
+	} catch (error: any) {
+		return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			errors: {
+				default: error.message
+			}
+		})
+	}
+	
 }
 
 
